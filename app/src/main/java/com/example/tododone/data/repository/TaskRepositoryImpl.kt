@@ -89,6 +89,13 @@ class TaskRepositoryImpl @Inject constructor(
         taskMapper.toDomain(updatedEntity)
     }
 
+    override suspend fun toggleTaskCompletion(id: String): Result<Task> = runCatching {
+        val entity = taskDao.getTaskById(id)
+            ?: throw IllegalArgumentException("Task not found: $id")
+        val isCurrentlyCompleted = entity.status == TaskStatus.COMPLETED.name
+        completeTask(id, !isCurrentlyCompleted).getOrThrow()
+    }
+
     override suspend fun getSubtasks(parentId: String): List<Task> =
         taskDao.getSubtasksSync(parentId).map { taskMapper.toDomain(it) }
 

@@ -16,7 +16,8 @@ interface TaskRepository {
     suspend fun createTask(task: Task): Result<Task>
     suspend fun updateTask(task: Task): Result<Task>
     suspend fun deleteTask(id: String): Result<Unit>
-    suspend fun completeTask(id: String, completed: Boolean): Result<Task>
+      suspend fun completeTask(id: String, completed: Boolean): Result<Task>
+      suspend fun toggleTaskCompletion(id: String): Result<Task>
     suspend fun getSubtasks(parentId: String): List<Task>
 
     suspend fun sync(): Result<SyncResult>
