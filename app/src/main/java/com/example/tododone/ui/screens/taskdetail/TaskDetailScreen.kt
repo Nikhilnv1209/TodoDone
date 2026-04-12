@@ -41,55 +41,55 @@ fun TaskDetailScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Task Details") },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { onNavigateToEdit(taskId) }) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit")
-                    }
-                    IconButton(onClick = { viewModel.deleteTask() }) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Delete",
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
-                },
+              TopAppBar(
+                  title = { Text("Task Details") },
+                  navigationIcon = {
+                      IconButton(onClick = onNavigateBack) {
+                          Icon(
+                              imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                              contentDescription = "Back"
+                          )
+                      }
+                  },
+                  actions = {
+                      IconButton(onClick = { onNavigateToEdit(taskId) }) {
+                          Icon(Icons.Default.Edit, contentDescription = "Edit")
+                      }
+                      IconButton(onClick = { viewModel.deleteTask() }) {
+                          Icon(
+                              Icons.Default.Delete,
+                              contentDescription = "Delete",
+                              tint = MaterialTheme.colorScheme.error
+                          )
+                      }
+                  },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
                 )
-            )
         }
-    ) { paddingValues ->
-        if (uiState.isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else if (uiState.task != null) {
-            val task = uiState.task!!
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                // Title
+      ) { paddingValues ->
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else if (uiState.task != null) {
+                val task = uiState.task!!
+                      Column(
+                          modifier = Modifier
+                              .fillMaxSize()
+                              .padding(paddingValues)
+                              .padding(horizontal = 16.dp)
+                              .verticalScroll(rememberScrollState()),
+                          verticalArrangement = Arrangement.spacedBy(16.dp)
+                      ) {
+                  // Title
                 Text(
                     text = task.title,
                     style = MaterialTheme.typography.headlineMedium,
@@ -190,20 +190,20 @@ fun TaskDetailScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Task not found",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                  Text(
+                      text = "Task not found",
+                      style = MaterialTheme.typography.bodyLarge,
+                      color = MaterialTheme.colorScheme.error
+                  )
+              }
+          }
     }
 }
 

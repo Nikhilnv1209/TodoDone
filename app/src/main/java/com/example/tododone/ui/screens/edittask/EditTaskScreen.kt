@@ -36,25 +36,25 @@ fun EditTaskScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Edit Task") },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            )
-        }
-    ) { paddingValues ->
+      Scaffold(
+          topBar = {
+              TopAppBar(
+                  title = { Text("Edit Task") },
+                  navigationIcon = {
+                      IconButton(onClick = onNavigateBack) {
+                          Icon(
+                              imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                              contentDescription = "Back"
+                          )
+                      }
+                  },
+                  colors = TopAppBarDefaults.topAppBarColors(
+                      containerColor = MaterialTheme.colorScheme.primaryContainer,
+                      titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                  )
+              )
+          }
+      ) { paddingValues ->
         if (uiState.isLoading) {
             Box(
                 modifier = Modifier
@@ -69,7 +69,7 @@ fun EditTaskScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -111,7 +111,7 @@ fun EditTaskScreen(
                     onPrioritySelected = { viewModel.updatePriority(it) }
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                  Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
                     onClick = { viewModel.saveTask() },

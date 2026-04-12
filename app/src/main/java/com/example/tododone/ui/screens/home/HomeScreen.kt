@@ -8,10 +8,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,46 +38,26 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeScreen(
-    onNavigateToAddTask: () -> Unit,
-    onNavigateToTaskDetail: (String) -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
-) {
-    val uiState by viewModel.uiState.collectAsState()
-    val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-    val greeting = when (currentDate.hour) {
-        in 5..11 -> "Good morning"
-        in 12..16 -> "Good afternoon"
-        in 17..21 -> "Good evening"
-        else -> "Good night"
-    }
+  @Composable
+  fun HomeScreen(
+      onNavigateToAddTask: () -> Unit,
+      onNavigateToTaskDetail: (String) -> Unit,
+      viewModel: HomeViewModel = hiltViewModel()
+  ) {
+      val uiState by viewModel.uiState.collectAsState()
+      val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+      val greeting = when (currentDate.hour) {
+          in 5..11 -> "Good morning"
+          in 12..16 -> "Good afternoon"
+          in 17..21 -> "Good evening"
+          else -> "Good night"
+      }
 
-    Scaffold(
-        containerColor = BackgroundPrimary,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToAddTask,
-                containerColor = PrimaryCream,
-                contentColor = OnPrimaryDark,
-                shape = CircleShape,
-                modifier = Modifier.size(64.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Task",
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
+      LazyColumn(
+          modifier = Modifier
+              .fillMaxSize()
+              .background(BackgroundPrimary),
+          contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             // Header Section
@@ -159,16 +146,15 @@ fun HomeScreen(
             }
         }
 
-        if (uiState.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = PrimaryCream)
-            }
-        }
-    }
-}
+      if (uiState.isLoading) {
+          Box(
+              modifier = Modifier.fillMaxSize(),
+              contentAlignment = Alignment.Center
+          ) {
+              CircularProgressIndicator(color = PrimaryCream)
+          }
+      }
+  }
 
 @Composable
 private fun HeaderSection(

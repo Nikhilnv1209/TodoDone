@@ -52,6 +52,10 @@ val PriorityLow = Color(0xFF86EFAC)             // Soft green
 val GlassmorphismLight = Color(0x1AFFFFFF)      // 10% white
 val GlassmorphismDark = Color(0x0D000000)       // 5% black
 
+// Navigation Colors
+val DarkSurface = Color(0xFF1C1C1E)             // Dark surface for navbar
+val ActiveNavIndicator = Color(0xFFF5E6D3)      // Cream color for active nav item
+
 // Premium Dark Color Scheme
 private val PremiumDarkColorScheme = darkColorScheme(
     primary = PrimaryCream,

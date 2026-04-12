@@ -2,8 +2,9 @@ package com.example.tododone.ui.screens.addtask
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -13,8 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,21 +42,12 @@ fun AddTaskScreen(
         containerColor = BackgroundPrimary,
         topBar = {
             TopAppBar(
-                title = { 
-                    Text(
-                        "New Task",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = TextPrimary
-                        )
-                    )
-                },
+                title = { Text("New Task") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = TextPrimary
+                            contentDescription = "Back"
                         )
                     }
                 },
@@ -67,14 +57,14 @@ fun AddTaskScreen(
                 )
             )
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .padding(innerPadding)
+                .padding(horizontal = 24.dp)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Title Field
             Column {
@@ -154,7 +144,7 @@ fun AddTaskScreen(
                 onPrioritySelected = { viewModel.updatePriority(it) }
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Save Button
             Button(
@@ -223,7 +213,7 @@ private fun DatePickerField(
             trailingIcon = {
                 IconButton(onClick = { showDatePicker = true }) {
                     Icon(
-                        Icons.Default.DateRange, 
+                        Icons.Default.DateRange,
                         contentDescription = "Select date",
                         tint = PrimaryCream
                     )
@@ -319,7 +309,7 @@ private fun TimePickerField(
             trailingIcon = {
                 IconButton(onClick = { showTimePicker = true }) {
                     Icon(
-                        Icons.Default.DateRange, 
+                        Icons.Default.DateRange,
                         contentDescription = "Select time",
                         tint = PrimaryCream
                     )
@@ -401,18 +391,18 @@ private fun PrioritySelector(
         ) {
             Priority.entries.forEach { priority ->
                 val isSelected = selectedPriority == priority
-                  val backgroundColor = when (priority) {
-                      Priority.HIGH -> if (isSelected) PriorityHigh else BackgroundSecondary
-                      Priority.MEDIUM -> if (isSelected) PriorityMedium else BackgroundSecondary
-                      Priority.LOW -> if (isSelected) PriorityLow else BackgroundSecondary
-                      Priority.NONE -> if (isSelected) TextTertiary else BackgroundSecondary
-                  }
+                val backgroundColor = when (priority) {
+                    Priority.HIGH -> if (isSelected) PriorityHigh else BackgroundSecondary
+                    Priority.MEDIUM -> if (isSelected) PriorityMedium else BackgroundSecondary
+                    Priority.LOW -> if (isSelected) PriorityLow else BackgroundSecondary
+                    Priority.NONE -> if (isSelected) TextTertiary else BackgroundSecondary
+                }
                 val textColor = if (isSelected) BackgroundPrimary else TextPrimary
 
                 FilterChip(
                     selected = isSelected,
                     onClick = { onPrioritySelected(priority) },
-                    label = { 
+                    label = {
                         Text(
                             priority.name,
                             style = MaterialTheme.typography.bodyMedium.copy(
